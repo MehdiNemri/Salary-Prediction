@@ -28,26 +28,26 @@ The inclusion of experience data, specifically years in the profession, adds a d
    git clone https://github.com/MEhdiNemri/Salary-Prediction.git
    cd Salary-Prediction
 2. **Install Dependencies Install necessary Python libraries**
+   ```bash
    pip install -r requirements.txt
 
 ### Building and Packaging the Project
-1. **To create a distributable package, Ensure setuptools and wheel are installed:**
 
-pip install setuptools wheel
-###
-2. **Build the package:** 
-```bash
-python setup.py sdist bdist_wheel
+1. **To create a distributable package, ensure `setuptools` and `wheel` are installed:**
 
+   ```bash
+   pip install setuptools wheel
+   python setup.py sdist bdist_wheel
 This command will generate a .whl file and a .tar.gz file in the dist directory, which can be used for distribution or installation.
 
 ### Running the Project
 
-#### Data Preprocessing and Model Training
+### Data Preprocessing and Model Training
 
 1. Open the Jupyter Notebook:
    ```bash
    jupyter notebook Salary-Prediction.ipynb
+
 Follow the notebook cells step-by-step. Start with data loading and cleaning, then proceed to model training and evaluation.
 
 

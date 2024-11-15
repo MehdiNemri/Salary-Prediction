@@ -31,11 +31,11 @@ The inclusion of experience data, specifically years in the profession, adds a d
    pip install -r requirements.txt
 
 ### Building and Packaging the Project
-1. To create a distributable package, Ensure setuptools and wheel are installed:
-```bash
-pip install setuptools wheel
+1. **To create a distributable package, Ensure setuptools and wheel are installed:**
 
-2. Build the package:
+pip install setuptools wheel
+###
+2. **Build the package:** 
 ```bash
 python setup.py sdist bdist_wheel
 

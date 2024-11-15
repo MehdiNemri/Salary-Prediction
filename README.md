@@ -26,7 +26,7 @@ The inclusion of experience data, specifically years in the profession, adds a d
 1. **Clone the Repository**
    ```bash
    git clone https://github.com/MEhdiNemri/Salary-Prediction.git
-   cd salary-prediction
+   cd Salary-Prediction
 2. **Install Dependencies Install necessary Python libraries**
    pip install -r requirements.txt
 

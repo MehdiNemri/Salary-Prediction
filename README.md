@@ -30,6 +30,16 @@ The inclusion of experience data, specifically years in the profession, adds a d
 2. **Install Dependencies Install necessary Python libraries**
    pip install -r requirements.txt
 
+### Building and Packaging the Project
+To create a distributable package, Ensure setuptools and wheel are installed:
+```bash
+pip install setuptools wheel
+Build the package:
+```bash
+python setup.py sdist bdist_wheel
+
+This command will generate a .whl file and a .tar.gz file in the dist directory, which can be used for distribution or installation.
+
 ### Running the Project
 
 #### Data Preprocessing and Model Training
@@ -38,5 +48,6 @@ The inclusion of experience data, specifically years in the profession, adds a d
    ```bash
    jupyter notebook Salary-Prediction.ipynb
 Follow the notebook cells step-by-step. Start with data loading and cleaning, then proceed to model training and evaluation.
+
 
 

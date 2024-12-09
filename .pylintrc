@@ -1,0 +1,27 @@
+[MASTER]
+# Chemins Python supplémentaires
+init-hook='import sys; sys.path.append(".")'
+
+# Utilisation multiprocessus
+jobs=4
+
+[MESSAGES CONTROL]
+# Désactiver certains avertissements
+disable=
+    C0111,  # docstrings manquants
+    R0913,  # trop d'arguments
+    W0621   # redéfinition variable externe
+
+[FORMAT]
+# Longueur maximale ligne
+max-line-length=120
+
+[DESIGN]
+# Limites conception
+max-attributes=10
+max-public-methods=20
+
+[SIMILARITIES]
+# Détection code dupliqué
+min-similarity-lines=4
+ignore-comments=yes

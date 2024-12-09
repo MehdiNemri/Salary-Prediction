@@ -51,4 +51,32 @@ This command will generate a .whl file and a .tar.gz file in the dist directory,
 Follow the notebook cells step-by-step. Start with data loading and cleaning, then proceed to model training and evaluation.
 
 
+# Static Code Analysis with Pylint
+
+To ensure code quality, we use **Pylint** for static code analysis. Follow these steps to install and run it:
+
+## Installation
+1. Install Pylint using `pip`:
+   ```bash
+   pip install pylint
+
+2. Verify the installation:
+   ```bash
+   pylint --version
+
+4. Convert your Jupyter notebook (.ipynb) into a Python script (.py). 
+   ```bash
+   jupyter nbconvert --to script Salary Prediction.ipynb
+
+3. Run Pylint on your Python file:
+   ```bash
+   pylint Salary Prediction.py
+
+
+   
+
+
+
+
+
 

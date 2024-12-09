@@ -72,8 +72,21 @@ To ensure code quality, we use **Pylint** for static code analysis. Follow these
    ```bash
    pylint Salary Prediction.py
 
+## Automating Static Code Analysis with Pre-Commit Hooks
 
+We use `pre-commit` to automate static code analysis with Pylint. This ensures that code quality checks are run automatically before every commit.
+
+### Setup Instructions
+
+1. Install the `pre-commit` library:
+   ```bash
+   pip install pre-commit
    
+2.  Add Pre-Commit Configuration : Create a file named .pre-commit-config.yaml in the root of the project with the following content (cf. .pre-commit-config.yaml ). This configuration runs Pylint with the .pylintrc configuration file.
+   
+3.  Install the pre-commit hook:
+    ```bash
+       pre-commit install
 
 
 

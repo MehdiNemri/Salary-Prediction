@@ -1,27 +1,28 @@
 [MASTER]
-# Chemins Python supplémentaires
+# Additional Python paths
 init-hook='import sys; sys.path.append(".")'
 
-# Utilisation multiprocessus
+# Enable multiprocessing for faster analysis
 jobs=4
 
 [MESSAGES CONTROL]
-# Désactiver certains avertissements
+# Disable specific warnings
 disable=
-    C0111,  # docstrings manquants
-    R0913,  # trop d'arguments
-    W0621   # redéfinition variable externe
+    C0111,  # missing docstrings
+    R0913,  # too many arguments
+    W0621   # variable redefinition from outer scope
 
 [FORMAT]
-# Longueur maximale ligne
+# Maximum line length
 max-line-length=120
 
 [DESIGN]
-# Limites conception
+# Design limits
 max-attributes=10
 max-public-methods=20
 
 [SIMILARITIES]
-# Détection code dupliqué
+# Duplicate code detection
 min-similarity-lines=4
 ignore-comments=yes
+

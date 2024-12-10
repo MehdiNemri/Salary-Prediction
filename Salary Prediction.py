@@ -27,10 +27,11 @@ except FileNotFoundError:
 
 # Dataset overview
 logger.info("Displaying the first few rows of the dataset:")
-print(df.head())
+logger.debug(f"Dataset head:\n{df.head()}")
 
 num_rows, num_columns = df.shape
 logger.info(f"The dataset contains {num_rows} rows and {num_columns} columns.")
+logger.debug(f"Dataset info:\n{df.info()}")
 
 # Checking for missing values
 missing_values = df.isnull().sum()
@@ -49,12 +50,15 @@ logger.info(f"Rows dropped due to missing values: {rows_dropped}")
 logger.info(f"New dataset shape: {df.shape}")
 
 # Display column names
-logger.info("Displaying the columns of the dataset:")
-print(df.columns)
+logger.debug(f"Dataset columns: {df.columns.tolist()}")
 
 # Display data types of columns
-logger.info("Displaying data types of each column:")
-print(df.dtypes)
+logger.debug(f"Dataset column types:\n{df.dtypes}")
+
+# Check if the dataset is empty
+if df.empty:
+    logger.critical("Dataset is empty. Exiting program.")
+    exit()
 
 # Dropping unnecessary columns
 if 'Unnamed: 0' in df.columns:
@@ -95,10 +99,7 @@ def categorize_job_title(job_title):
 
 df['Job Title'] = df['Job Title'].apply(categorize_job_title)
 logger.info("Job titles have been categorized.")
-
-# Display unique job titles
-logger.info("Displaying unique job titles after categorization:")
-print(df['Job Title'].value_counts())
+logger.debug(f"Unique job titles after categorization:\n{df['Job Title'].value_counts()}")
 
 # Grouping Education Levels
 def group_education(education):
@@ -116,6 +117,7 @@ def group_education(education):
 
 df['Education Level'] = df['Education Level'].apply(group_education)
 logger.info("Education levels have been standardized.")
+logger.debug(f"Education levels:\n{df['Education Level'].value_counts()}")
 
 # Encoding categorical features
 logger.info("Encoding categorical features...")
@@ -123,6 +125,7 @@ features = ['Gender', 'Country', 'Education Level', 'Job Title', 'Race']
 le = LabelEncoder()
 for feature in features:
     df[feature] = le.fit_transform(df[feature])
+    logger.debug(f"Encoded {feature} values: {df[feature].unique()}")
 
 # Normalizing continuous variables
 logger.info("Normalizing continuous variables...")

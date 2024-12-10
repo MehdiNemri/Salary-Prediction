@@ -87,6 +87,9 @@ We use `pre-commit` to automate static code analysis with Pylint. This ensures t
 3.  Install the pre-commit hook:
     ```bash
        pre-commit install
+4. Run all pre-commit hooks on the entire repository:
+   ```bash
+      pre-commit run --all-files
 
 
 

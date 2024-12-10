@@ -26,6 +26,9 @@ except FileNotFoundError:
     exit()
 
 # Dataset overview
+logger.info("Displaying the first few rows of the dataset:")
+print(df.head())
+
 num_rows, num_columns = df.shape
 logger.info(f"The dataset contains {num_rows} rows and {num_columns} columns.")
 
@@ -44,6 +47,14 @@ df.dropna(axis=0, inplace=True)
 rows_dropped = initial_row_count - df.shape[0]
 logger.info(f"Rows dropped due to missing values: {rows_dropped}")
 logger.info(f"New dataset shape: {df.shape}")
+
+# Display column names
+logger.info("Displaying the columns of the dataset:")
+print(df.columns)
+
+# Display data types of columns
+logger.info("Displaying data types of each column:")
+print(df.dtypes)
 
 # Dropping unnecessary columns
 if 'Unnamed: 0' in df.columns:
@@ -85,6 +96,10 @@ def categorize_job_title(job_title):
 df['Job Title'] = df['Job Title'].apply(categorize_job_title)
 logger.info("Job titles have been categorized.")
 
+# Display unique job titles
+logger.info("Displaying unique job titles after categorization:")
+print(df['Job Title'].value_counts())
+
 # Grouping Education Levels
 def group_education(education):
     education = str(education).lower()
@@ -108,7 +123,6 @@ features = ['Gender', 'Country', 'Education Level', 'Job Title', 'Race']
 le = LabelEncoder()
 for feature in features:
     df[feature] = le.fit_transform(df[feature])
-    logger.debug(f"Encoded {feature}: {df[feature].unique()}")
 
 # Normalizing continuous variables
 logger.info("Normalizing continuous variables...")
@@ -116,15 +130,14 @@ scaler = StandardScaler()
 df[['Age', 'Years of Experience', 'Salary']] = scaler.fit_transform(df[['Age', 'Years of Experience', 'Salary']])
 
 # Visualizations
-logger.info("Generating visualizations...")
+logger.info("Displaying visualizations...")
 
 # Gender Distribution
 plt.figure(figsize=(8, 6))
 gender_counts = df['Gender'].value_counts()
 plt.pie(gender_counts, labels=gender_counts.index, autopct='%1.1f%%', startangle=90, colors=['skyblue', 'lightcoral', 'gold'])
 plt.title('Gender Distribution in the Dataset')
-plt.savefig('visualizations/gender_distribution.png')
-logger.info("Gender distribution pie chart saved.")
+plt.show()
 
 # Age Distribution
 plt.figure(figsize=(10, 6))
@@ -132,16 +145,25 @@ sns.histplot(data=df, x='Age', bins=20, kde=True, color='skyblue')
 plt.title('Age Distribution in the Dataset')
 plt.xlabel('Age')
 plt.ylabel('Frequency')
-plt.savefig('visualizations/age_distribution.png')
-logger.info("Age distribution histogram saved.")
+plt.show()
+
+# Education Level Distribution
+plt.figure(figsize=(8, 6))
+sns.countplot(x='Education Level', data=df, palette='Set2')
+plt.title('Education Level Distribution')
+plt.xlabel('Education Level')
+plt.ylabel('Count')
+plt.xticks(rotation=45)
+plt.show()
 
 # Job Title and Salary
 plt.figure(figsize=(12, 6))
-sns.barplot(x='Job Title', y='Salary', data=df, palette='Set2')
-plt.xticks(rotation=90)
+sns.barplot(x='Job Title', y='Salary', data=df, palette='Set3')
 plt.title('Job Title vs Salary')
-plt.savefig('visualizations/job_title_vs_salary.png')
-logger.info("Job Title vs Salary bar chart saved.")
+plt.xlabel('Job Title')
+plt.ylabel('Salary')
+plt.xticks(rotation=90)
+plt.show()
 
 # Train-Test Split
 logger.info("Splitting dataset into training and testing sets...")
@@ -170,8 +192,3 @@ logger.info(f"Random Forest R2 Score: {r2_score(y_test, r_pred):.2f}")
 logger.info(f"Random Forest RMSE: {np.sqrt(mean_squared_error(y_test, r_pred)):.2f}")
 
 logger.info("Salary Prediction Script Completed Successfully!")
-
-
-
-   
-    

@@ -64,10 +64,6 @@ To ensure code quality, we use **Pylint** for static code analysis. Follow these
    ```bash
    pylint --version
 
-4. Convert your Jupyter notebook (.ipynb) into a Python script (.py). 
-   ```bash
-   jupyter nbconvert --to script Salary Prediction.ipynb
-
 3. Run Pylint on your Python file:
    ```bash
    pylint Salary Prediction.py

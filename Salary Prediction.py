@@ -8,10 +8,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from logging_config import setup_logger
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+from sklearn.metrics import r2_score, mean_squared_error
 
 # Setting up the logger
 logger = setup_logger()
@@ -115,6 +115,34 @@ logger.info("Normalizing continuous variables...")
 scaler = StandardScaler()
 df[['Age', 'Years of Experience', 'Salary']] = scaler.fit_transform(df[['Age', 'Years of Experience', 'Salary']])
 
+# Visualizations
+logger.info("Generating visualizations...")
+
+# Gender Distribution
+plt.figure(figsize=(8, 6))
+gender_counts = df['Gender'].value_counts()
+plt.pie(gender_counts, labels=gender_counts.index, autopct='%1.1f%%', startangle=90, colors=['skyblue', 'lightcoral', 'gold'])
+plt.title('Gender Distribution in the Dataset')
+plt.savefig('visualizations/gender_distribution.png')
+logger.info("Gender distribution pie chart saved.")
+
+# Age Distribution
+plt.figure(figsize=(10, 6))
+sns.histplot(data=df, x='Age', bins=20, kde=True, color='skyblue')
+plt.title('Age Distribution in the Dataset')
+plt.xlabel('Age')
+plt.ylabel('Frequency')
+plt.savefig('visualizations/age_distribution.png')
+logger.info("Age distribution histogram saved.")
+
+# Job Title and Salary
+plt.figure(figsize=(12, 6))
+sns.barplot(x='Job Title', y='Salary', data=df, palette='Set2')
+plt.xticks(rotation=90)
+plt.title('Job Title vs Salary')
+plt.savefig('visualizations/job_title_vs_salary.png')
+logger.info("Job Title vs Salary bar chart saved.")
+
 # Train-Test Split
 logger.info("Splitting dataset into training and testing sets...")
 X_train, X_test, y_train, y_test = train_test_split(df.drop('Salary', axis=1), df['Salary'], test_size=0.2, random_state=42)
@@ -142,3 +170,8 @@ logger.info(f"Random Forest R2 Score: {r2_score(y_test, r_pred):.2f}")
 logger.info(f"Random Forest RMSE: {np.sqrt(mean_squared_error(y_test, r_pred)):.2f}")
 
 logger.info("Salary Prediction Script Completed Successfully!")
+
+
+
+   
+    

@@ -1,7 +1,7 @@
 [MASTER]
 # Additional Python paths
 init-hook='import sys; sys.path.append(".")'
-ignore=salary_prediction.py
+
 
 # Enable multiprocessing for faster analysis
 jobs=4

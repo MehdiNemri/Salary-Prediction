@@ -66,7 +66,7 @@ To ensure code quality, we use **Pylint** for static code analysis. Follow these
 
 3. Run Pylint on your Python file:
    ```bash
-   pylint Salary Prediction.py
+   pylint salary_prediction.py
 
 ## Automating Static Code Analysis with Pre-Commit Hooks
 

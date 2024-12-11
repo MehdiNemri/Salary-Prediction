@@ -65,6 +65,22 @@ else:
 
 # Grouping Job Titles
 def categorize_job_title(job_title):
+    """
+    Categorize job titles into broader domains for simplified analysis.
+
+    Args:
+        job_title (str): The job title to categorize.
+
+    Returns:
+        str: A string representing the broader category of the job title.
+
+    Examples:
+        >>> categorize_job_title('Software Developer')
+        'Software/Developer'
+
+        >>> categorize_job_title('Data Scientist')
+        'Data Analyst/Scientist'
+    """
     job_title = str(job_title).lower()
     if 'software' in job_title or 'developer' in job_title:
         return 'Software/Developer'
@@ -102,6 +118,22 @@ print(df['Job Title'].value_counts())
 
 # Grouping Education Levels
 def group_education(education):
+    """
+    Group education levels into broader categories for consistency.
+
+    Args:
+        education (str): The education level to group.
+
+    Returns:
+        str: A string representing the broader category of the education level.
+
+    Examples:
+        >>> group_education('Bachelor degree')
+        'Bachelor'
+
+        >>> group_education('PhD in Computer Science')
+        'PhD'
+    """
     education = str(education).lower()
     if 'high school' in education:
         return 'High School'

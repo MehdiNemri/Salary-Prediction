@@ -1,3 +1,13 @@
+# Salary Prediction Using Machine Learning
+
+## Table of Contents
+- [Project Description](#project-description)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
 # Salary-Prediction
 Project Overview
 This project aims to predict the salaries of individuals from various backgrounds, spanning different countries and races, by leveraging demographic factors such as occupation, age, gender, experience, education level, and more. The dataset is sourced from Kaggle, containing 32,561 records with 15 columns. The analysis focuses on eight key features to predict one primary target: the individual's salary.
@@ -19,6 +29,13 @@ The inclusion of experience data, specifically years in the profession, adds a d
 | `Race`               | Racial background of the individual           |
 | `Salary`             | Salary of the individual                      |
 | `Unnamed: 0`         | Index                                         |
+
+## Features
+- Exploratory Data Analysis (EDA) with visualizations.
+- Categorical encoding and data normalization.
+- Machine learning models for salary prediction.
+- Unit testing for key functions.
+- Automated code linting using pre-commit hooks.
 
 
 ### Setup Instructions
@@ -87,7 +104,16 @@ We use `pre-commit` to automate static code analysis with Pylint. This ensures t
    ```bash
       pre-commit run --all-files
 
+## Contributing
+Contributions are welcome! Please follow these steps:
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/YourFeature`).
+3. Commit your changes (`git commit -m 'Add your feature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Open a pull request.
 
+## License
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
 
 

@@ -1,0 +1,35 @@
+name: Run tests with pytest
+
+on:
+  push:
+    branches:
+      - main  # Exécute le pipeline sur chaque commit dans `main`
+  pull_request:  # Exécute les tests sur chaque pull request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, 3.10]  # Tester sur plusieurs versions de Python
+
+    steps:
+      # Étape 1 : Cloner le dépôt
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Installer Python
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Étape 3 : Installer les dépendances
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Étape 4 : Exécuter les tests avec pytest
+      - name: Run tests with pytest
+        run: python3 -m pytest tests
+

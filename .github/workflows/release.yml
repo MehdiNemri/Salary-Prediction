@@ -1,0 +1,63 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # Ce workflow s'exécute lorsqu'on pousse un tag qui commence par "v"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Cloner le dépôt
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Installer Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      # Étape 3 : Installer les dépendances
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Étape 4 : Exécuter les tests
+      - name: Run tests
+        run: python3 -m pytest tests
+
+      # Étape 5 : Générer un changelog
+      - name: Generate changelog
+        id: changelog
+        run: |
+          echo "Generating changelog..."
+          git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" > changelog.txt
+        shell: bash
+
+      # Étape 6 : Créer une release GitHub
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            ## Changes in this release:
+            ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+
+      # Étape 7 : Ajouter des artifacts à la release
+      - name: Upload artifact to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./changelog.txt
+          asset_name: changelog.txt
+          asset_content_type: text/plain
+

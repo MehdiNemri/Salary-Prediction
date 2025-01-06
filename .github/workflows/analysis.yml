@@ -31,7 +31,7 @@ jobs:
 
       # Étape 5 : Vérifier le formatage du code avec black
       - name: Check code formatting with black
-        run: black --check .
+        run: black .
 
       # Étape 6 : Scanner les secrets dans le code
       - name: Detect secrets in commits

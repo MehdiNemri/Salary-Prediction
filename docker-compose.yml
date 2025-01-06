@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  eda_preprocessing_visualization:
+    build:
+      context: ./eda_preprocessing_visualization
+    volumes:
+      - ./data:/data
+    container_name: eda_preprocessing_visualization_service
+
+  modeling:
+    build:
+      context: ./modeling
+    depends_on:
+      - eda_preprocessing_visualization
+    volumes:
+      - ./data:/data
+    container_name: modeling_service
+

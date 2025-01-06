@@ -5,7 +5,7 @@ on:
     tags:
       - 'v*'  # Ce workflow s'exécute lorsqu'on pousse un tag qui commence par "v"
 permissions:
-  contents: write  # Ajout des permissions nécessaires
+  contents: write-all  # Ajout des permissions nécessaires
 jobs:
   release:
     runs-on:  ubuntu-22.04

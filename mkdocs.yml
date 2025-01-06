@@ -1,0 +1,6 @@
+site_name: Documentation de mon projet
+theme:
+  name: material  
+nav:
+  - Accueil: README.md  # Pointer directement vers README.md
+

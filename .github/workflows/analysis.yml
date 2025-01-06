@@ -1,0 +1,39 @@
+name: Code Analysis
+
+on:
+  push:
+    branches:
+      - main  # Exécuter sur chaque commit poussé dans `main`
+  pull_request:  # Exécuter sur chaque pull request
+
+jobs:
+  analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Cloner le dépôt
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Installer Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      # Étape 3 : Installer les outils nécessaires
+      - name: Install analysis tools
+        run: pip install flake8 black detect-secrets
+
+      # Étape 4 : Analyse du style de code avec flake8
+      - name: Run flake8 for code style and smells
+        run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      # Étape 5 : Vérifier le formatage du code avec black
+      - name: Check code formatting with black
+        run: black --check .
+
+      # Étape 6 : Scanner les secrets dans le code
+      - name: Detect secrets in commits
+        run: detect-secrets scan --all
+

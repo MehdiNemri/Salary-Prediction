@@ -4,8 +4,8 @@ services:
   eda_preprocessing:
     build:
       context: .  # Définit le contexte comme le répertoire racine
-      dockerfile: ./eda_preprocessing/Dockerfile
-    container_name: eda_preprocessing_container
+      dockerfile: ./eda_preprocessing_visualization/Dockerfile
+    container_name: eda_preprocessing_visualization_container
     volumes:
       - ./data:/app/data  # Montez un dossier si nécessaire
 

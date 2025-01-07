@@ -1,19 +1,18 @@
 version: "3.9"
 
 services:
-  eda_preprocessing_visualization:
+  eda_preprocessing:
     build:
-      context: ./eda_preprocessing_visualization
+      context: .  # Définit le contexte comme le répertoire racine
+      dockerfile: ./eda_preprocessing/Dockerfile
+    container_name: eda_preprocessing_container
     volumes:
-      - ./data:/data
-    container_name: eda_preprocessing_visualization_service
+      - ./data:/app/data  # Montez un dossier si nécessaire
 
   modeling:
     build:
-      context: ./modeling
-    depends_on:
-      - eda_preprocessing_visualization
+      context: .  # Définit le contexte comme le répertoire racine
+      dockerfile: ./modeling/Dockerfile
+    container_name: modeling_container
     volumes:
-      - ./data:/data
-    container_name: modeling_service
-
+      - ./data:/app/data  # Montez un dossier si nécessaire

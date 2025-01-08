@@ -1,63 +1,60 @@
 name: Create Release
-
 on:
   push:
     tags:
-      - 'v*'  # Ce workflow s'exécute lorsqu'on pousse un tag qui commence par "v"
-
+      - 'v*'
 permissions:
-  contents: write  # Permissions nécessaires
-
+  contents: write
 jobs:
   release:
     runs-on: ubuntu-22.04
-
     steps:
-      # Étape 1 : Cloner le dépôt
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # This ensures we fetch all history for changelog generation
 
-      # Étape 2 : Installer Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.10.9
+          python-version: '3.10.9'
 
-      # Étape 3 : Installer les dépendances
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # Étape 4 : Exécuter les tests
       - name: Run tests
         run: python3 -m pytest tests
 
-      # Étape 5 : Générer un changelog
       - name: Generate changelog
         id: changelog
         run: |
-          echo "Generating changelog..."
-          git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" > changelog.txt
-          echo "changelog=$(cat changelog.txt)" >> $GITHUB_ENV
-        shell: bash
+          # Get the previous tag, fallback to first commit if no previous tag exists
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || git rev-list --max-parents=0 HEAD)
+          CURRENT_TAG=${GITHUB_REF#refs/tags/}
+          
+          # Generate changelog with error handling
+          echo "# Changelog for $CURRENT_TAG" > changelog.txt
+          echo "" >> changelog.txt
+          echo "## Changes:" >> changelog.txt
+          git log --no-merges --pretty=format:"* %h - %s (%an)" $PREVIOUS_TAG..HEAD >> changelog.txt
+          
+          # Verify changelog is not empty
+          if [ ! -s changelog.txt ]; then
+            echo "No changes found between tags. Adding default message."
+            echo "* No changes recorded in this release" >> changelog.txt
+          fi
+          
+          # Make changelog available as output
+          changelog=$(cat changelog.txt)
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$changelog" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
-      # Étape 6 : Créer une release GitHub
       - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            ## Changes in this release:
-            ${{ env.changelog }}
-          draft: false
-          prerelease: false
-
-      # Étape 7 : Ajouter des artifacts à la release
-      - name: Upload artifact to release
         uses: softprops/action-gh-release@v1
         with:
           files: ./changelog.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          body_path: ./changelog.txt
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+          prerelease: false

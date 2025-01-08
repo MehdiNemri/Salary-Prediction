@@ -8,6 +8,7 @@ WORKDIR /app
 COPY logging_config.py /app/
 COPY requirements.txt /app/
 COPY eda_preprocessing_visualization.py /app/
+COPY Salary_Data_Based_country_and_race.csv /app/
 
 # Installer les dépendances Python
 RUN pip install --no-cache-dir -r requirements.txt

@@ -6,7 +6,7 @@ on:
       - 'v*'  # Ce workflow s'exécute lorsqu'on pousse un tag qui commence par "v"
 
 permissions:
-  contents: write  # Permissions corrigées
+  contents: write  # Permissions nécessaires
 
 jobs:
   release:
@@ -37,7 +37,7 @@ jobs:
         run: |
           echo "Generating changelog..."
           git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"%h - %s" > changelog.txt
-          echo "::set-output name=changelog::$(cat changelog.txt)"
+          echo "changelog=$(cat changelog.txt)" >> $GITHUB_ENV
         shell: bash
 
       # Étape 6 : Créer une release GitHub
@@ -46,11 +46,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
           body: |
             ## Changes in this release:
-            ${{ steps.changelog.outputs.changelog }}
+            ${{ env.changelog }}
           draft: false
           prerelease: false
 
